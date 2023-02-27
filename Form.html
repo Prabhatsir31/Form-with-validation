@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Form</title>
+	<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>-->
+	<script type="text/javascript">
+		
+
+		function validation(){
+
+			var user = document.getElementById('user').value;
+			var pass = document.getElementById('pass').value;
+			var conpass = document.getElementById('conpass').value;
+			var mobileNumber = document.getElementById('mobileNumber').value;
+			var emails = document.getElementById('emails').value;
+			 var i = document.forms["myForm"]["img"].value;
+
+			if(user == ""){
+				document.getElementById('username').innerHTML =" ** Please fill the username field";
+				return false;
+			}
+			if((user.length <= 2) || (user.length > 20)) {
+				document.getElementById('username').innerHTML =" ** Username lenght must be between 2 and 20";
+				return false;	
+			}
+			if(!isNaN(user)){
+				document.getElementById('username').innerHTML =" ** only characters are allowed";
+				return false;
+			}
+
+			if(emails == ""){
+				document.getElementById('emailids').innerHTML =" ** Please fill the email idx` field";
+				return false;
+			}
+			if(emails.indexOf('@') <= 0 ){
+				document.getElementById('emailids').innerHTML =" ** @ Invalid Position";
+				return false;
+			}
+
+			if((emails.charAt(emails.length-4)!='.') && (emails.charAt(emails.length-3)!='.')){
+				document.getElementById('emailids').innerHTML =" ** . Invalid Position";
+				return false;
+			}
+
+			if(pass == ""){
+				document.getElementById('passwords').innerHTML =" ** Please fill the password field";
+				return false;
+			}
+			if((pass.length <= 8) || (pass.length > 20)) {
+				document.getElementById('passwords').innerHTML =" ** Passwords lenght must be between 8 and 20";
+				return false;	
+			}
+
+			if(pass!=conpass){
+				document.getElementById('confrmpass').innerHTML =" ** Password does not match the confirm password";
+				return false;
+			}
+			if(conpass == ""){
+				document.getElementById('confrmpass').innerHTML =" ** Please fill the confirmpassword field";
+				return false;
+			}
+
+			var gend=document.forms["myForm"]["gender"];
+			if(gend[0].checked==false&&gend[1].checked==false) 
+			{
+				document.getElementById('genders').innerHTML =" ** Please fill the gender field";
+			}
+
+			if(mobileNumber == ""){
+				document.getElementById('mobileno').innerHTML =" ** Please fill the mobile NUmber field";
+				return false;
+			}
+			if(isNaN(mobileNumber)){
+				document.getElementById('mobileno').innerHTML =" ** user must write digits only not characters";
+				return false;
+			}
+			if(mobileNumber.length!=10){
+				document.getElementById('mobileno').innerHTML =" ** Mobile Number must be 10 digits only";
+				return false;
+			}
+
+			if (i.length== 0){
+ 			 	alert("Please Upload Your Photograph");
+  				return false;
+			}
+			else {
+				var allowedExtension = ['jpg', 'jpeg', 'png'];
+				var fileExtension = i.split('.').pop().toLowerCase();
+				var isValidFile = false;
+				for(var index in allowedExtension) {
+				    if(fileExtension === allowedExtension[index]) {
+				      isValidFile = true;
+				      break;
+				    }
+				  }
+				  if(!isValidFile) {
+				    setTimeout(enableFunction, 0);
+				    alert('Only JPG, JPEG & PNG files are allowed. Your Photograph Extension is: '+fileExtension+'.');
+				  return false;        
+				  } 
+				  else if(isValidFile) {
+				    var FileSize = document.forms("img").files[0].size / 1024 / 1024; //In MB
+				    if (FileSize > 5) {
+				      setTimeout(enableFunction, 0);
+				      alert('File size must be less than 5 MB.'+' Your Photograph size is: '+FileSize+' MB.');
+				      return false;
+				    }
+				  }
+				}
+		}
+
+	</script>
+</head>
+<body>
+	
+<center>
+	<h1 class="text-white text-center font-weight-bold bg-success" style="font-size: 55px;"> Complete Form Validation In JavaScript 2018 </h1>
+	<h2>All the records are mandatory</h2>
+	<form action="#" onsubmit="return validation()" name="myForm" method="post">
+		<table border="1" height="500" width="400">	
+			<tr>
+				<td><label for="user"> Username: </label></td>
+				<td><input type="text" name="user" id="user" autocomplete="off"><br>
+				<span id="username"> </span></td>
+			</tr>				
+			<tr>
+				<td><label> Email: </label></td>
+				<td><input type="text" name="email" id="emails" autocomplete="off"><br>
+				<span id="emailids"> </span></td>
+			<tr>
+				<td><label> Password: </label></td>
+				<td><input type="text" name="pass" id="pass" autocomplete="off"><br>
+				<span id="passwords"> </span></td>
+			</tr>
+			<tr>
+				<td><label> Confirm Password: </label></td>
+				<td><input type="text" name="conpass" id="conpass" autocomplete="off"><br>
+				<span id="confrmpass"> </span></td>
+			</tr>
+			<tr>
+				<td><label> Gender: </label></td>
+				<td><input type="radio" name="gender" id="gender" value="male">Male
+					<input type="radio" name="gender" id="gender" value="female">Female<br>
+				<span id="genders"> </span></td>
+			</tr>
+			<tr>
+				<td><label> Mobile Number: </label></td>
+				<td><input type="text" name="mobile" id="mobileNumber" autocomplete="off"><br>
+				<span id="mobileno"> </span></td>
+			</tr>
+			<tr>
+        		<td>Image:</td>
+        		<td>
+        		<img src="dummy.png" width="50px" height="50px" onClick="triggerClick()" id="profileDisplay">
+        		<br><input type="file" name="img"  onChange="displayImage(this)"><br>
+        		<p style="color: black;font-size: 10px;">Note:Only JPG, JPEG & PNG files are allowed.</p></td>
+      		</tr>
+			<tr>
+				<td colspan="2">
+					<center>
+					<input type="reset" value="reset">
+					<input type="submit" name="submit" value="submit">
+					</center>
+				</td>
+			</tr>
+		</table>
+	</form>
+</center>
+</body>
+</html>
